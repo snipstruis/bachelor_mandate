@@ -1,0 +1,115 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[driver=xetex,a4paper,left=45mm,right=45mm,top=30mm,bottom=40mm]{geometry} % propper margins on a4 paper
+\usepackage{pdfpages} % to include cover
+\usepackage{url}
+%\usepackage[hidelinks]{hyperref} % make contents and references clickable in pdf
+\usepackage{multicol} % allows multiple colums
+\usepackage{titlesec} % adjust whitespace around headings and improves placing
+\usepackage{microtype} % adjusts kerning and letterspacing
+\usepackage{soul} %striketrough
+\usepackage{parskip} % newline instead of indenting
+\usepackage{graphicx} % include images
+\graphicspath{{graphics/}}
+
+\usepackage{fontspec} % allows custom fonts
+\setmainfont[BoldFont=Source Sans Pro Bold,AutoFakeSlant=0.3]{Source Serif Pro}
+\setmonofont{Source Code Pro}
+
+\usepackage{listings} % allows code listings
+\usepackage{lstautogobble}
+
+\makeatletter
+\newcommand\footnoteref[1]{\protected@xdef\@thefnmark{\ref{#1}}\@footnotemark}
+\makeatother
+
+\lstdefinelanguage{CSharp}
+    {language=[sharp]C,
+     morekeywords={var}}
+
+\lstdefinelanguage{FSharp}
+    {morekeywords={let, new, match, with, rec, open, module, namespace, type, of, member, and, for, in, do, begin, end, fun, function, try, mutable, if, then, else},
+    sensitive=true,
+    morecomment=[l][\itshape]{///},
+    morecomment=[l][\itshape]{//},
+    morecomment=[s][\itshape]{{(*}{*)}},
+    morestring=[b]",
+    }
+
+\lstdefinelanguage{mc}
+    {morekeywords={Func,Data,TypeFunc,Module,TypeAlias,Inherit,is},
+     morestring=[b]",
+     sensitive=true,
+    }
+
+\lstset{basicstyle=\footnotesize\ttfamily,
+        breaklines=true,
+        keepspaces=true,
+        xleftmargin=6pt,
+        keywordstyle=\bfseries,
+        stringstyle=\itshape,
+        %gobble=2, % ignore first 2 spaces indents in code listings
+        %frame=single,
+        autogobble,
+        captionpos=b,
+        }
+
+\lstnewenvironment{MC}[1][]{% make code unsplittable
+   \noindent
+   \minipage{\linewidth} 
+   \lstset{language=mc,#1}}
+   {\endminipage}
+
+\lstnewenvironment{FS}[1][]{% make code unsplittable
+   \noindent
+   \minipage{\linewidth} 
+   \lstset{language=FSharp,#1}}
+   {\endminipage}
+
+\lstnewenvironment{CS}[1][]{% make code unsplittable
+   \noindent
+   \minipage{\linewidth} 
+   \lstset{language=[sharp]C,#1}}
+   {\endminipage}
+
+\usepackage[sorting=none,backend=biber]{biblatex} %citations
+\addbibresource{references.bib}
+\renewcommand*{\bibfont}{\small} % small references at the end
+
+%\usepackage{draftwatermark}
+%\SetWatermarkText{DRAFT - DO NOT GRADE}
+%\SetWatermarkFontSize{40pt}
+%\SetWatermarkLightness{0.8}
+%\SetWatermarkAngle{0}
+%\SetWatermarkVerCenter{5em}
+
+\begin{document}
+
+% disable page numbers
+\pagestyle{empty} 
+
+% cover page
+\includepdf[pages=1]{build/cover.pdf}
+\newpage
+
+% make subsubsections unnumbered and not show up in the TOC
+\setcounter{secnumdepth}{2} 
+\setcounter{tocdepth}{2}
+
+% start page numbers
+\setcounter{page}{1}
+\pagenumbering{arabic}
+\pagestyle{plain}
+
+%\begin{multicols}{2}
+\tableofcontents
+%\columnbreak
+
+\input{intro}
+\input{summary}
+\input{method}
+\input{results}
+\input{literature}
+\printbibliography
+%\end{multicols}
+\input{stakeholders}
+\end{document}
